@@ -1,5 +1,7 @@
 package Problem1;
 
+import java.util.LinkedList;
+
 public class ArrayDictionary implements Dictionary {
     private KVEntry[] entries;
 
@@ -45,7 +47,27 @@ public class ArrayDictionary implements Dictionary {
 
     @Override
     public void remove(String key) {
-        // homework
+        if (contains(key)) { //perform operation if key is in dict; if not, do nothing
+            int hash = hashFunction(key);
+
+            //if there are no entries, do nothing
+            if (entries[hash] == null) {
+                return;
+            }
+
+            KVEntry temp = entries[hash]; //key's value to check
+            if (temp.key.equals(key)) { //check first KVEntry's key
+                entries[hash] = null;
+            }
+
+            while (temp.next != null) { //traverse till find same key
+                if (temp.next.key.equals(key)) { //if key matches
+                    KVEntry toKeep = temp.next.next;
+                    temp.next = toKeep;
+                }
+                temp = temp.next;
+            }
+        }
     }
 
     @Override
