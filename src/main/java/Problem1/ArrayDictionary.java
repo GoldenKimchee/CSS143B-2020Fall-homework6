@@ -57,13 +57,14 @@ public class ArrayDictionary implements Dictionary {
 
             KVEntry temp = entries[hash]; //key's value to check
             if (temp.key.equals(key)) { //check first KVEntry's key
-                entries[hash] = null;
+                entries[hash] = temp.next;
             }
 
             while (temp.next != null) { //traverse till find same key
                 if (temp.next.key.equals(key)) { //if key matches
-                    KVEntry toKeep = temp.next.next;
+                    KVEntry toKeep = temp.next.next; //skip over the KVEntry with matching key
                     temp.next = toKeep;
+                    return;
                 }
                 temp = temp.next;
             }
